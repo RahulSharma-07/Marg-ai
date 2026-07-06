@@ -1,0 +1,325 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: var(--font-sans);
+
+  /* Marg AI Color Palette */
+  --color-background: #050608;
+  --color-background-secondary: #090B10;
+  --color-foreground: #F8FAFC;
+  --color-foreground-secondary: #94A3B8;
+  --color-muted: #64748B;
+  
+  --color-sidebar: #0B1015;
+  
+  --color-primary: #00D9FF;
+  --color-primary-secondary: #22D3EE;
+  --color-primary-hover: #67E8F9;
+  
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+
+  --color-glass-card: rgba(255,255,255,0.04);
+  --color-border: rgba(255,255,255,0.08);
+
+  --radius-xl: 24px;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-input: 40px;
+  --radius-full: 999px;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+    background-color: #050608; 
+    background-image: 
+      radial-gradient(circle, transparent 55%, rgba(0,0,0,.55) 100%),
+      radial-gradient(circle at 82% 12%, rgba(0,217,255,.14), transparent 60%),
+      radial-gradient(circle at center, rgba(0,217,255,.08), transparent 45%),
+      radial-gradient(circle at 92% 88%, rgba(0,217,255,.10), transparent 20%),
+      radial-gradient(ellipse at left, rgba(0,217,255,.05), transparent 65%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    /* Prevent horizontal overflow globally */
+    overflow-x: hidden;
+  }
+
+  /* Fluid typography — mobile-first, scales up */
+  h1, .hero-text {
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 120%;
+  }
+
+  h2 {
+    font-size: clamp(24px, 4vw, 48px);
+    font-weight: 700;
+  }
+
+  h3 {
+    font-size: clamp(20px, 3vw, 36px);
+    font-weight: 700;
+  }
+
+  h4 {
+    font-size: clamp(18px, 2.5vw, 28px);
+    font-weight: 600;
+  }
+
+  p, .body-text {
+    font-size: clamp(14px, 2vw, 16px);
+    font-weight: 400;
+  }
+
+  small, .small-text {
+    font-size: clamp(12px, 1.5vw, 14px);
+    font-weight: 500;
+  }
+
+  .caption {
+    font-size: clamp(11px, 1.2vw, 12px);
+    font-weight: 400;
+  }
+
+  /* Responsive images globally */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Minimum touch target size for interactive elements */
+  button:not([role="switch"]), a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Toggle switches have their own fixed track dimensions */
+  button[role="switch"] {
+    min-height: unset;
+    min-width: unset;
+  }
+
+  /* Ensure inputs are full-width on mobile */
+  input, textarea, select {
+    max-width: 100%;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  .glow-neon {
+    box-shadow: 0 0 10px rgba(0, 217, 255, 0.20),
+                0 0 30px rgba(0, 217, 255, 0.15),
+                0 0 60px rgba(0, 217, 255, 0.08);
+  }
+
+  .card-shadow {
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.45);
+  }
+
+  .glow-shadow {
+    box-shadow: 0 0 35px rgba(0, 217, 255, 0.12);
+  }
+
+  /* Utility to hide scrollbar but keep functionality */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Responsive container utility */
+  .responsive-container {
+    width: 100%;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: clamp(16px, 3vw, 40px);
+    padding-right: clamp(16px, 3vw, 40px);
+  }
+
+  /* Mobile overlay backdrop */
+  .mobile-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 40;
+    backdrop-filter: blur(4px);
+  }
+
+  /* Responsive padding */
+  .responsive-padding {
+    padding: clamp(16px, 4vw, 48px);
+  }
+
+  @keyframes wave {
+    0% { transform: rotate(0deg); }
+    10% { transform: rotate(14deg); }
+    20% { transform: rotate(-8deg); }
+    30% { transform: rotate(14deg); }
+    40% { transform: rotate(-4deg); }
+    50% { transform: rotate(10deg); }
+    60% { transform: rotate(0deg); }
+    100% { transform: rotate(0deg); }
+  }
+  
+  .animate-wave {
+    animation: wave 2.5s infinite;
+    transform-origin: 70% 70%;
+  }
+
+  @keyframes glow-pulse {
+    0% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+    100% { opacity: 0.3; }
+  }
+
+  .animate-glow-pulse {
+    animation: glow-pulse 4s infinite;
+  }
+
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-wave,
+    .animate-glow-pulse,
+    .animate-spin,
+    .animate-ping,
+    .animate-pulse {
+      animation: none !important;
+    }
+  }
+}
+
+/* ─── AI Chat Card Utilities ─────────────────────────────────────────────── */
+
+.ai-card {
+  background: rgba(10,18,28,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px;
+  box-shadow: 0 15px 60px rgba(0,0,0,0.45);
+}
+
+.ai-card-section-title {
+  color: #00E5FF;
+  font-weight: 600;
+  font-size: clamp(11px, 1.5vw, 13px);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.rich-markdown-body {
+  font-size: clamp(14px, 2vw, 15px);
+  line-height: 1.8;
+  color: rgba(255,255,255,0.85);
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Responsive table wrapper */
+.rich-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rich-table th {
+  background: rgba(255,255,255,0.06);
+  color: #F8FAFC;
+  font-weight: 600;
+  padding: clamp(6px, 1.5vw, 10px) clamp(8px, 2vw, 14px);
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  white-space: nowrap;
+}
+
+.rich-table td {
+  padding: clamp(6px, 1.5vw, 8px) clamp(8px, 2vw, 14px);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.8);
+}
+
+.rich-table tr:hover td {
+  background: rgba(255,255,255,0.02);
+}
+
+/* Code block horizontal scroll */
+pre {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+/* Chart and diagram responsiveness */
+.chart-container,
+.diagram-container,
+.mermaid {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* SVG charts responsive */
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Ensure diagrams don't overflow on mobile */
+.rich-markdown-body pre code svg,
+.rich-markdown-body .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Make code blocks containing ASCII art or charts scrollable */
+.rich-markdown-body pre {
+  max-width: calc(100vw - 32px);
+  overflow-x: auto;
+}
+
+@media (max-width: 640px) {
+  .rich-markdown-body pre {
+    max-width: calc(100vw - 16px);
+    font-size: 11px;
+  }
+  
+  /* Reduce padding on mobile for charts */
+  .chart-container,
+  .diagram-container {
+    padding: 8px;
+  }
+}
+
+/* Prevent long words from breaking layouts */
+.rich-markdown-body p,
+.rich-markdown-body li,
+.rich-markdown-body td {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Responsive modal/dialog utilities */
+.responsive-modal {
+  width: 90vw;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
